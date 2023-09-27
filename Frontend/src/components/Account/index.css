@@ -35,6 +35,10 @@
   flex: 1;
 }
 
+.account-content-wrapper a {
+  text-decoration: none;
+}
+
 .transaction-button {
   display: block;
   width: 100%;

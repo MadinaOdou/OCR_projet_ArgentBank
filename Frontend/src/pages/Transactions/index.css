@@ -1,0 +1,21 @@
+.collapse-title {
+    display: flex;
+    flex-direction: row;
+    gap: 61%;
+    height: 35px;
+    width: 80%;
+    margin: 12px auto;
+}
+
+.left-titles , .right-titles {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-titles {
+    gap: 115px;
+}
+
+.right-titles {
+    gap: 40px;
+}

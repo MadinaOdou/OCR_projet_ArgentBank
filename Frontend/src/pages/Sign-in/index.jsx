@@ -5,13 +5,15 @@ import "./index.css";
 
 function SignIn() {
   return (
-    <main className="main bg-dark">
-      <section className="sign-in-content">
-        <FontAwesomeIcon icon={faCircleUser} />
-        <h1>Sign In</h1>
-        <Form />
-      </section>
-    </main>
+    <div className="container">
+      <main className="main bg-dark">
+        <section className="sign-in-content">
+          <FontAwesomeIcon icon={faCircleUser} />
+          <h1>Sign In</h1>
+          <Form />
+        </section>
+      </main>
+    </div>
   );
 }
 
