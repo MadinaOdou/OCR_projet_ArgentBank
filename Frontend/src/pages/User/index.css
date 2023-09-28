@@ -6,7 +6,21 @@
   padding: 10px;
 }
 
-.header {
+.header,
+.edit-form.open {
   color: #fff;
   margin-bottom: 2rem;
+}
+
+.nonVisible {
+  display: none;
+}
+
+.edit-form.close {
+  display: none;
+}
+
+.edit-form.open {
+  width: 17%;
+  margin: 0 auto;
 }

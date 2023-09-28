@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/argentBankLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleUser,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import "./index.css";
 
 function Header() {
@@ -21,6 +24,10 @@ function Header() {
             <FontAwesomeIcon icon={faCircleUser} />
             Sign In
           </Link>
+          {/* <Link className="main-nav-item" to="/">
+            <FontAwesomeIcon icon={faRightFromBracket} />
+            Sign Out
+          </Link> */}
         </div>
       </nav>
     </header>

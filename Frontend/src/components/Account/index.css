@@ -64,3 +64,30 @@
     width: 200px;
   }
 }
+
+.collapse-title {
+  display: flex;
+  flex-direction: row;
+  gap: 61%;
+  height: 35px;
+  width: 75%;
+  margin: 12px auto;
+  position: relative;
+  color: #fff;
+}
+
+.left-titles,
+.right-titles {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+}
+
+.left-titles {
+  gap: 115px;
+}
+
+.right-titles {
+  right: 50px;
+  gap: 45px;
+}
