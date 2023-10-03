@@ -65,6 +65,10 @@
   }
 }
 
+.transactions-details {
+  margin-bottom: 50px;
+}
+
 .collapse-title {
   display: flex;
   flex-direction: row;

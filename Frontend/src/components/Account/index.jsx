@@ -3,7 +3,7 @@ import Collapse from "../Collapse";
 import "./index.css";
 
 function Account({ title, amount, description }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   function handleToggle() {
     setOpen(!open);
   }
