@@ -1,10 +1,20 @@
+import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Account from "../../components/Account";
 import EditUsername from "../../components/EditUsername";
+import { getUserData } from "../../redux/slices/userSlice";
 import "./index.css";
 
 function User() {
   const [active, setActive] = useState(false);
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.userData);
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
+
   function handleToggle() {
     setActive(!active);
   }
@@ -16,7 +26,7 @@ function User() {
           <h1>
             Welcome back
             <br />
-            Tony Jarvis!
+            {userData && userData.firstName} {userData && userData.lastName} !
           </h1>
           <button className="edit-button" onClick={handleToggle}>
             Edit Name

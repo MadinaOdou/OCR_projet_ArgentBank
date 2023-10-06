@@ -1,92 +1,61 @@
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setEmail,
-  setPassword,
-  signInSelector,
-  resetForm,
-} from "../../redux/slices/signInSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { signInUser } from "../../redux/slices/signInSlice";
 import "./index.css";
 
 function Form() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const dispatch = useDispatch();
-  const formData = useSelector(signInSelector);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "email") {
-      dispatch(setEmail(value));
-    } else if (name === "password") {
-      dispatch(setPassword(value));
-    }
-  };
-
-  const hadleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSignIn = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Erreur !");
-        }
-      })
-      .then((data) => {
-        if (data) {
-          if (data.token) {
-            if (
-              data.email === formData.email &&
-              data.password === formData.password
-            ) {
-              localStorage.setItem("token", data.token);
-            } else {
-              alert("Erreur !!!");
-            }
-          } else {
-            alert("Erreur !!");
-          }
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    dispatch(resetForm());
+    let userCredentials = {
+      email,
+      password,
+    };
+    dispatch(signInUser(userCredentials)).then((result) => {
+      if (result.payload) {
+        setEmail("");
+        setPassword("");
+        navigate("/user");
+      }
+    });
   };
+
   return (
-    <form onSubmit={hadleSubmit}>
+    <form onSubmit={handleSignIn}>
       <div className="input-wrapper">
         <label htmlFor="email">Username</label>
         <input
-          type="text"
+          type="email"
+          autoComplete="on"
+          required
           id="email"
           name="email"
-          value={formData.email}
-          onChange={handleChange}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div className="input-wrapper">
         <label htmlFor="password">Password</label>
         <input
           type="password"
+          autoComplete="on"
+          required
           id="password"
           name="password"
-          value={formData.password}
-          onChange={handleChange}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
       <div className="input-remember">
         <input type="checkbox" id="remember-me" />
         <label htmlFor="remember-me">Remember me</label>
       </div>
-      <Link to="/user">
-        <button className="sign-in-button">Sign In</button>
-      </Link>
+      <button className="sign-in-button">Sign In</button>
     </form>
   );
 }
