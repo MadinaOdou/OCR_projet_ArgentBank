@@ -1,9 +1,8 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserData } from "../../redux/slices/userSlice";
 import Account from "../../components/Account";
 import EditUsername from "../../components/EditUsername";
-import { getUserData } from "../../redux/slices/userSlice";
 import "./index.css";
 
 function User() {
@@ -12,7 +11,11 @@ function User() {
   const userData = useSelector((state) => state.user.userData);
 
   useEffect(() => {
-    dispatch(getUserData());
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(getUserData(token));
+      console.log(userData);
+    }
   }, [dispatch]);
 
   function handleToggle() {
@@ -23,11 +26,15 @@ function User() {
     <div className="container">
       <main className="main bg-dark">
         <div className={`header ${active ? "nonVisible" : "visible"}`}>
-          <h1>
-            Welcome back
-            <br />
-            {userData && userData.firstName} {userData && userData.lastName} !
-          </h1>
+          {userData && userData.firstName && userData.lastName ? (
+            <h1>
+              Welcome back
+              <br />
+              {userData.firstName} {userData.lastName} !
+            </h1>
+          ) : (
+            <p>Loading user data</p>
+          )}
           <button className="edit-button" onClick={handleToggle}>
             Edit Name
           </button>

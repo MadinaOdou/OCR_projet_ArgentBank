@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signInUser } from "../../redux/slices/signInSlice";
+import { getUserData } from "../../redux/slices/userSlice";
 import "./index.css";
 
 function Form() {
@@ -10,19 +11,30 @@ function Form() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSignIn = (e) => {
+
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    let userCredentials = {
-      email,
-      password,
-    };
-    dispatch(signInUser(userCredentials)).then((result) => {
+    try {
+      let userCredentials = {
+        email,
+        password,
+      };
+
+      // console.log(userCredentials);
+
+      const result = await dispatch(signInUser(userCredentials));
+      // console.log(result);
+
       if (result.payload) {
         setEmail("");
         setPassword("");
+        const token = result.payload.body.token;
+        await dispatch(getUserData(token));
         navigate("/user");
       }
-    });
+    } catch (error) {
+      console.error("Error in handleSignIn", error);
+    }
   };
 
   return (
