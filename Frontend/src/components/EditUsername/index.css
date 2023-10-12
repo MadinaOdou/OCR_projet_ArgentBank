@@ -30,3 +30,9 @@
 .cancel-button {
   width: 48%;
 }
+
+.read-only {
+  opacity: 70%;
+  background-color: white;
+  color: grey;
+}

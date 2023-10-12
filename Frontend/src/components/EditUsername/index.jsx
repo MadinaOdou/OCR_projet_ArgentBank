@@ -1,25 +1,66 @@
+import { useDispatch, useSelector } from "react-redux";
+import { editUserName } from "../../redux/slices/userNameSlice";
 import "./index.css";
 
-function EditUsername() {
+function EditUsername({ onSave }) {
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.userData);
+
+  async function handleSaveButton(e) {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    const newUserName = document.getElementById("username").value;
+
+    try {
+      await dispatch(editUserName({ token, newUserName }));
+      onSave();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <form>
-      <h3 className="edit-form-title">Edit user info</h3>
-      <div className="flex-row">
-        <label htmlFor="username">User name:</label>
-        <input type="text" id="username" placeholder="Ben_hg" />
-      </div>
-      <div className="flex-row">
-        <label htmlFor="firstname">First name:</label>
-        <input type="firstname" id="firstname" />
-      </div>
-      <div className="flex-row">
-        <label htmlFor="lastname">Last name:</label>
-        <input type="lastname" id="lastname" />
-      </div>
-      <div className="edit-form-buttons">
-        <button className="save-button edit-button">Save</button>
-        <button className="cancel-button edit-button">Cancel</button>
-      </div>
+      {userData && userData.firstName && userData.lastName ? (
+        <div>
+          <h3 className="edit-form-title">Edit user info</h3>
+          <div className="flex-row">
+            <label htmlFor="username">User name:</label>
+            <input type="text" id="username" defaultValue={userData.userName} />
+          </div>
+          <div className="flex-row">
+            <label htmlFor="firstname">First name:</label>
+            <input
+              className="read-only"
+              type="text"
+              id="firstname"
+              value={userData.firstName}
+              readOnly
+            />
+          </div>
+          <div className="flex-row">
+            <label htmlFor="lastname">Last name:</label>
+            <input
+              className="read-only"
+              type="text"
+              id="lastname"
+              value={userData.lastName}
+              readOnly
+            />
+          </div>
+          <div className="edit-form-buttons">
+            <button
+              className="save-button edit-button"
+              onClick={handleSaveButton}
+            >
+              Save
+            </button>
+            <button className="cancel-button edit-button">Cancel</button>
+          </div>
+        </div>
+      ) : (
+        <p>Error</p>
+      )}
     </form>
   );
 }

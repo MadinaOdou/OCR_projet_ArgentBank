@@ -39,7 +39,7 @@ export const signInSlice = createSlice({
         state.token = null;
       })
       .addCase(signInUser.fulfilled, (state, action) => {
-        state.loggedIn = false;
+        state.loggedIn = true;
         state.user = action.payload;
         state.error = null;
         state.token = action.payload.body.token;

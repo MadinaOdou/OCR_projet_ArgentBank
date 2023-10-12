@@ -14,12 +14,15 @@ function User() {
     const token = localStorage.getItem("token");
     if (token) {
       dispatch(getUserData(token));
-      console.log(userData);
     }
   }, [dispatch]);
 
   function handleToggle() {
     setActive(!active);
+  }
+
+  function handleSaveButton() {
+    setActive(false);
   }
 
   return (
@@ -40,7 +43,7 @@ function User() {
           </button>
         </div>
         <div className={active ? "edit-form open" : "edit-form close"}>
-          <EditUsername />
+          <EditUsername onSave={handleSaveButton} />
         </div>
         <h2 className="sr-only">Accounts</h2>
         <Account
