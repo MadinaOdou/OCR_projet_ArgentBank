@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editUserName } from "../../redux/slices/userNameSlice";
 import "./index.css";
 
+// eslint-disable-next-line react/prop-types
 function EditUsername({ onSave }) {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.userData);

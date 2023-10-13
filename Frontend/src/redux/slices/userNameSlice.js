@@ -24,7 +24,7 @@ export const editUserName = createAsyncThunk(
 );
 
 const initialState = {
-  userNameData: null,
+  userNameData: "",
 };
 
 export const editUserNameSlice = createSlice({

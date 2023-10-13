@@ -29,7 +29,13 @@ const initialState = {
 export const signInSlice = createSlice({
   name: "signIn",
   initialState,
-  reducers: {},
+  reducers: {
+    signOut: (state) => {
+      state.user = null;
+      state.loggedIn = false;
+      state.token = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signInUser.pending, (state) => {
@@ -53,4 +59,5 @@ export const signInSlice = createSlice({
   },
 });
 
+export const { signOut } = signInSlice.actions;
 export default signInSlice.reducer;

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../../redux/slices/signInSlice";
+import { removeUserData } from "../../redux/slices/userSlice";
 import logo from "../../assets/images/argentBankLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,8 +10,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./index.css";
 
+// eslint-disable-next-line react/prop-types
 function Header({ loggedIn }) {
   const userData = useSelector((state) => state.user.userData);
+  const dispatch = useDispatch();
+
+  function handleSignOut() {
+    localStorage.removeItem("token");
+    dispatch(signOut());
+    dispatch(removeUserData());
+  }
 
   return (
     <header>
@@ -24,7 +34,7 @@ function Header({ loggedIn }) {
         </Link>
         <div>
           {loggedIn && userData ? (
-            <Link className="main-nav-item" to="/">
+            <Link className="main-nav-item" to="/" onClick={handleSignOut}>
               <FontAwesomeIcon icon={faCircleUser} />
               {userData.firstName}
               <FontAwesomeIcon icon={faRightFromBracket} />
