@@ -22,6 +22,10 @@
   align-items: center;
 }
 
+.main-nav-item a {
+  text-decoration: none;
+}
+
 .main-nav-item:hover {
   text-decoration: underline;
 }
@@ -43,4 +47,10 @@
 .fa-right-from-bracket {
   padding-left: 10px;
   padding-right: 3px;
+}
+
+@media (max-width: 720px) {
+  .main-nav-logo-image {
+    width: 160px;
+  }
 }

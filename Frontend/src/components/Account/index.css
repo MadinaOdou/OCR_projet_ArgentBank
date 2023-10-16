@@ -95,3 +95,17 @@
   right: 50px;
   gap: 45px;
 }
+
+@media (max-width: 720px) {
+  .left-titles {
+    left: 5px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 720px) {
+  .right-titles {
+    right: 15px;
+    gap: 7px;
+  }
+}

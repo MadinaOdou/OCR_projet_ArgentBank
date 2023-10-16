@@ -34,12 +34,16 @@ function Header({ loggedIn }) {
         </Link>
         <div>
           {loggedIn && userData ? (
-            <Link className="main-nav-item" to="/" onClick={handleSignOut}>
-              <FontAwesomeIcon icon={faCircleUser} />
-              {userData.firstName}
-              <FontAwesomeIcon icon={faRightFromBracket} />
-              Sign Out
-            </Link>
+            <div className="main-nav-item">
+              <Link to="/user">
+                <FontAwesomeIcon icon={faCircleUser} />
+                {userData.firstName}
+              </Link>
+              <Link to="/" onClick={handleSignOut}>
+                <FontAwesomeIcon icon={faRightFromBracket} />
+                Sign Out
+              </Link>
+            </div>
           ) : (
             <Link className="main-nav-item" to="/sign-in">
               <FontAwesomeIcon icon={faCircleUser} />

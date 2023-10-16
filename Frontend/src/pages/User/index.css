@@ -24,3 +24,9 @@
   width: 17%;
   margin: 0 auto;
 }
+
+@media (max-width: 720px) {
+  .edit-form.open {
+    width: 60%;
+  }
+}
