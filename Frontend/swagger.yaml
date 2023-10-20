@@ -18,14 +18,15 @@ paths:
       tags:
       - "transactions"
       summary: "Retrieves a list of all transactions for the last month"
+      description: ""
+      produces:
+      - "application/json"
       parameters:
       - name: "Authorization"
         in: "header"
         description: "Bearer (apiKey)"
         required: true
         type: "string"
-      produces:
-      - "application/json"
       responses:
         200:
           description: "List of transactions retrieved successfully"
@@ -38,6 +39,9 @@ paths:
       tags:
       - "transactions"
       summary: "Fetches details for a specific transaction"
+      description: ""
+      produces:
+      - "application/json"
       parameters:
       - name: "Authorization"
         in: "header"
@@ -49,8 +53,6 @@ paths:
         description: "ID of the transaction"
         required: true
         type: "number"
-      produces:
-      - "application/json"
       responses:
         200:
           description: "Successful response"
@@ -60,95 +62,81 @@ paths:
           description: "Transaction not found"
         500:
           description: "Internal Server Error"
-  /transactions/{transactionId}/note:
-    post:
-      security:
-        - Bearer: []
+    patch:
       tags:
       - "transactions"
-      summary: "Adds a note to the details of the specified transaction"
+      summary: "Partially updates the details of the specified transaction"
+      description: ""
+      produces:
+      - "application/json"
       parameters:
       - name: "transactionId"
         in: "path"
         description: "ID of the transaction"
         required: true
         type: "number"
+      - in: "body"
+        name: "body"
+        description: "Updated details"
+        required: true
+        schema:
+          $ref: "#/definitions/Transaction"
+      - name: categoryId
+        in: query
+        description: "ID of the category (optional)"
+        required: false
+        type: number
+      - name: note
+        in: query
+        description: "Note (optional)"
+        required: false
+        type: string
       responses:
         200:
-          description: "Note added successfully"
-          schema:
-            $ref: "#/definitions/TransactionDetails"
+          description: "Details of the transaction updated successfully"
+        400:
+          description: "Invalid value"
         404:
           description: "Transaction not found"
-    put:
-      security:
-        - Bearer: []
-      tags:
-      - "transactions"
-      summary: "Updates the note in the details of the specified transaction"
-      parameters:
-      - name: "transactionId"
-        in: "path"
-        description: "ID of the transaction"
-        required: true
-        type: "number"
-      produces:
-      - "application/json"
-      responses:
-        200:
-          description: "Note updated successfully"
-          schema:
-            $ref: "#/definitions/TransactionDetails"
-        400:
-          description: "Invalid value"
-    delete:
-      security:
-        - Bearer: []
-      tags:
-      - "transactions"
-      summary: "Removes the note from the details of the specified transaction"
-      parameters:
-      - name: "transactionId"
-        in: "path"
-        description: "ID of the transaction"
-        required: true
-        type: "number"
-      responses:
-        200:
-          description: "Note deleted successfully"
-          schema:
-            $ref: "#/definitions/TransactionDetails"
         500:
           description: "Internal Server Error"
-      deprecated: true
-  /transactions/{transactionId}/category:
-    put:
       security:
-        - Bearer: []
+      - Bearer: []
+    delete:
       tags:
       - "transactions"
-      summary: "Updates the category in the details of the specified transaction"
+      summary: "Removes the details of the specified transaction"
+      description: ""
+      produces:
+      - "application/json"
       parameters:
       - name: "transactionId"
         in: "path"
         description: "ID of the transaction"
         required: true
         type: "number"
-      produces:
-      - "application/json"
+      - in: "body"
+        name: "body"
+        description: "All details"
+        required: true
+        schema:
+          $ref: "#/definitions/Transaction"
       responses:
         200:
-          description: "Category updated successfully"
+          description: "Details of the transaction deleted successfully"
           schema:
-            $ref: "#/definitions/TransactionDetails"
-        400:
-          description: "Invalid value"
-    
+            $ref: "#/definitions/Transaction"
+        404:
+          description: "Transaction not found"
+        500:
+          description: "Internal Server Error"
+      security:
+      - Bearer: []
 securityDefinitions:
   Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
 definitions:
   ApiResponse:
     type: "object"
@@ -163,29 +151,29 @@ definitions:
         type: "string"
   Transaction:
     type: "object"
+    required:
+    - "id"
+    - "account"
+    - "date"
+    - "amount"
     properties:
       id:
         type: "number"
+      account:
+        type: "string"
       date:
         type: "string"
         format: "DD/MM/YY"
       description:
         type: "string"
-      amount:
-        type: "number"
-      balance:
-        type: "number"
-  TransactionDetails:
-    type: "object"
-    properties:
-      id:
-        type: "number"
       transactionType:
         type: "string"
       category:
         type: "string"
       note: 
         type: "string"
-  
-        
-  
+      amount:
+        type: "number"
+      balance:
+        type: "number"
+
